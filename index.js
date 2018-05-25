@@ -20,8 +20,6 @@ rtm.on('message', (event) => {
         const response = responses[Math.floor(Math.random() * responses.length)];
        
         if (text.some(word => listen.includes(word))) {
-            console.log('respond here!');
-
             rtm.sendMessage(response, message.channel)
                 .then(msg => console.log('Sent!'))
                 .catch(err => console.log('PROBLEM: ', err));
