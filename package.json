@@ -1,0 +1,30 @@
+{
+  "name": "melbot",
+  "version": "0.1.0",
+  "description": "Hi I am Mel. Woof.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jveens/slackbot.git"
+  },
+  "keywords": [
+    "slack",
+    "bot"
+  ],
+  "author": "Jenny Veens",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jveens/slackbot/issues"
+  },
+  "homepage": "https://github.com/jveens/slackbot#readme",
+  "dependencies": {
+    "@slack/client": "^4.2.2",
+    "dotenv": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
+}
