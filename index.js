@@ -4,9 +4,11 @@ const { RTMClient, CLIENT_EVENTS } = require('@slack/client');
 const rtm = new RTMClient(process.env.BOT_TOKEN);
 rtm.start();
 
-const responses = ['woof', '_*bark*_', '_growls_', 'Ruff!'];
+const responses = ['woof', '_*bark*_', '*ruff!*', '_hides under the desk_'];
 
 rtm.on('message', (event) => {
+
+    console.log(event);
 
     if (event.type === 'message' || event.subtype != 'message_deleted') {
         // Skip messages that are from a bot or my own user ID
