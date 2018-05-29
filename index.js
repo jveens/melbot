@@ -5,8 +5,6 @@ const BOT_TOKEN = process.env.BOT_TOKEN;
 const rtm = new RTMClient(BOT_TOKEN);
 rtm.start();
 
-console.log(rtm.webClient.reactions.add);
-
 const responses = ['woof', '_*bark*_', '*ruff!*', '_hides under the desk_'];
 
 rtm.on('message', (event) => {
