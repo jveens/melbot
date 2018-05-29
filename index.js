@@ -41,9 +41,9 @@ rtm.on('reaction_added', (event) => {
             name: 'feet'
         }
 
-        if (event.item.type === 'messge') {
-            response[channel] = event.item.channel;
-            response[timestamp] = event.item.ts;
+        if (event.item.type === 'message') {
+            response['channel'] = event.item.channel;
+            response['timestamp'] = event.item.ts;
         } else {
             if (event.item.file_comment && event.item.file_comment != 'undefined') {
                 response['file_comment'] = event.item.file_comment;
