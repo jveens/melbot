@@ -18,11 +18,11 @@ rtm.on('message', (event) => {
         }
         
         const message = event;
-        const listen = ['mel', 'mel?', 'mel\'', 'mel!'];
-        const text = (message.text).toLowerCase().split(' ');
+        const listen = /mel[^\w]/;
+        const text = (message.text).toLowerCase();
         const response = responses[Math.floor(Math.random() * responses.length)];
        
-        if (text.some(word => listen.includes(word)) || message.text.includes(`<@${rtm.activeUserId}>`)) {
+        if (text.match(listen) || text.includes(`<@${rtm.activeUserId}>`)) {
             rtm.sendMessage(response, message.channel)
                 .then(msg => console.log('Sent!'))
                 .catch(err => console.log('PROBLEM: ', err));
