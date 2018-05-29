@@ -1,8 +1,11 @@
 require('dotenv/config');
 const { RTMClient, CLIENT_EVENTS } = require('@slack/client');
+const BOT_TOKEN = process.env.BOT_TOKEN;
 
-const rtm = new RTMClient(process.env.BOT_TOKEN);
+const rtm = new RTMClient(BOT_TOKEN);
 rtm.start();
+
+console.log(rtm.webClient.reactions.add);
 
 const responses = ['woof', '_*bark*_', '*ruff!*', '_hides under the desk_'];
 
@@ -29,5 +32,30 @@ rtm.on('message', (event) => {
         }
     }
     
+});
+
+rtm.on('reaction_added', (event) => {
+
+    if (event.reaction === 'melvin' ) {
+
+        const response = {
+            token: BOT_TOKEN,
+            name: 'feet'
+        }
+
+        if (event.item.type === 'messge') {
+            response[channel] = event.item.channel;
+            response[timestamp] = event.item.ts;
+        } else {
+            if (event.item.file_comment && event.item.file_comment != 'undefined') {
+                response['file_comment'] = event.item.file_comment;
+            } else {
+                response['file'] = event.item.file;
+            }
+        }
+
+        rtm.webClient.reactions.add(response);
+    }
+
 });
 
