@@ -16,21 +16,40 @@ rtm.on('message', (event) => {
         if ((event.subtype && event.subtype === 'bot_event') ||
             (!event.subtype && event.user === rtm.activeUserId)) {
             return;
-        }
-        
-        const message = event;
-        const listen = /mel[^\w]/;
-        const text = (message.text).toLowerCase();
-        const response = responses[Math.floor(Math.random() * responses.length)];
-       
-        if (text.match(listen) || text.includes(`<@${rtm.activeUserId}>`)) {
-            rtm.sendMessage(response, message.channel)
-                .then(msg => console.log('Sent!'))
-                .catch(err => console.log('PROBLEM: ', err));
+
+        // greet new people
+        } else if (event.subtype && event.subtype === 'channel_join') {
+            handleJoin(event);
+
+        // eavesdrop
+        } else {
+            handleMessage(event);
         }
     }
-    
 });
+
+const handleJoin = (event) => {
+
+    const message = event;
+
+    rtm.sendMessage(`_runs over to ${event.user_profile.first_name}, wagging her tail politely_`, message.channel);
+
+};
+
+const handleMessage = (event) => {
+
+    const message = event;
+    const listen = /mel[^\w]/;
+    const text = (message.text).toLowerCase();
+    const response = responses[Math.floor(Math.random() * responses.length)];
+
+    if (text.match(listen) || text.includes(`<@${rtm.activeUserId}>`)) {
+        rtm.sendMessage(response, message.channel)
+            .then(msg => console.log('Sent!'))
+            .catch(err => console.log('PROBLEM: ', err));
+    }
+
+};
 
 rtm.on('reaction_added', (event) => {
 
@@ -56,4 +75,3 @@ rtm.on('reaction_added', (event) => {
     }
 
 });
-
