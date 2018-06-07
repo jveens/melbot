@@ -19,7 +19,7 @@ rtm.on('message', (event) => {
         }
         
         const message = event;
-        const listen = /mel[^\w]/;
+        const listen = /mel\W|mel$/;
         const text = (message.text).toLowerCase();
         const response = responses[Math.floor(Math.random() * responses.length)];
        
