@@ -9,7 +9,7 @@ const responses = ['woof', '_*bark*_', '*ruff!*', '_hides under the desk_'];
 
 rtm.on('message', (event) => {
 
-    console.log(event);
+    // console.log(event);
 
     if (event.type === 'message' && event.text) {
         // Skip messages that are from a bot or my own user ID
@@ -31,8 +31,15 @@ rtm.on('message', (event) => {
 const handleJoin = (event) => {
 
     const message = event;
+    const userID = event.user;
 
-    rtm.sendMessage(`_runs over to ${event.user_profile.first_name}, wagging her tail politely_`, message.channel);
+    // we don't want mel to greet herself
+    if (userID && (userID !== rtm.activeUserId)) {
+
+        // first name is optional when setting up slack, adding a fallback if it's missing
+        const name = event.user_profile.first_name === '' ? 'her new friend' : event.user_profile.first_name;
+        rtm.sendMessage(`_runs over to ${name}, wagging her tail politely_`, message.channel);
+    }
 
 };
 
