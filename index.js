@@ -25,17 +25,6 @@ rtm.on('message', (event) => {
         } else {
             handleMessage(event);
         }
-        
-        const message = event;
-        const listen = /mel\W|mel$/;
-        const text = (message.text).toLowerCase();
-        const response = responses[Math.floor(Math.random() * responses.length)];
-       
-        if (text.match(listen) || text.includes(`<@${rtm.activeUserId}>`)) {
-            rtm.sendMessage(response, message.channel)
-                .then(msg => console.log('Sent!'))
-                .catch(err => console.log('PROBLEM: ', err));
-        }
     }
 });
 
