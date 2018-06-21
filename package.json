@@ -23,6 +23,7 @@
   "homepage": "https://github.com/jveens/slackbot#readme",
   "dependencies": {
     "@slack/client": "^4.2.2",
+    "@slack/events-api": "^1.0.1",
     "dotenv": "^5.0.1"
   },
   "devDependencies": {
