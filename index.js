@@ -1,59 +1,37 @@
-require('dotenv/config');
-const { RTMClient, CLIENT_EVENTS } = require('@slack/client');
-const BOT_TOKEN = process.env.BOT_TOKEN;
+require("dotenv/config");
+require("babel-register")({
+    presets: ["env"]
+});
+// All RTM events here
+const helpers = require('./helpers');
+const rtm = require("./rtm");
 
-const rtm = new RTMClient(BOT_TOKEN);
-rtm.start();
+require('./rtmFuncs')(rtm);
 
-const responses = ['woof', '_*bark*_', '*ruff!*', '_hides under the desk_'];
+const http = require("http");
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
+const port = process.env.PORT || 5000;
 
-rtm.on('message', (event) => {
+app.use(bodyParser.json());
 
-    console.log(event);
+app.post("/slack/events", (req, res) => {
+    const body = req.body;
+    const { event } = body;
+    res.sendStatus(200);
 
-    if (event.type === 'message' && event.text) {
-        // Skip messages that are from a bot or my own user ID
-        if ((event.subtype && event.subtype === 'bot_event') ||
-            (!event.subtype && event.user === rtm.activeUserId)) {
-            return;
-        }
-        
-        const message = event;
-        const listen = /mel\W|mel$/;
-        const text = (message.text).toLowerCase();
-        const response = responses[Math.floor(Math.random() * responses.length)];
-       
-        if (text.match(listen) || text.includes(`<@${rtm.activeUserId}>`)) {
-            rtm.sendMessage(response, message.channel)
-                .then(msg => console.log('Sent!'))
-                .catch(err => console.log('PROBLEM: ', err));
-        }
+    if (event && event.type === 'message' && event.channel_type === 'im' && event.user !== rtm.activeUserId) {
+        const response = helpers.randomDogSpeak();
+
+        rtm.sendMessage(
+            response,
+            body.event.channel
+        );
     }
-    
 });
 
-rtm.on('reaction_added', (event) => {
-
-    if (event.reaction === 'melvin' ) {
-
-        const response = {
-            token: BOT_TOKEN,
-            name: 'feet'
-        }
-
-        if (event.item.type === 'message') {
-            response['channel'] = event.item.channel;
-            response['timestamp'] = event.item.ts;
-        } else {
-            if (event.item.file_comment && event.item.file_comment != 'undefined') {
-                response['file_comment'] = event.item.file_comment;
-            } else {
-                response['file'] = event.item.file;
-            }
-        }
-
-        rtm.webClient.reactions.add(response);
-    }
-
+http.createServer(app).listen(port, () => {
+    console.log(`server listening on port ${port}`);
 });
-
+ 
