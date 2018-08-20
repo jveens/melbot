@@ -5,8 +5,9 @@ require("babel-register")({
 // All RTM events here
 const helpers = require('./helpers');
 const rtm = require("./rtm");
+const web = require("./web");
 
-require('./rtmFuncs')(rtm);
+require('./rtmFuncs')(rtm, web);
 
 const http = require("http");
 const express = require("express");
@@ -19,6 +20,8 @@ app.use(bodyParser.json());
 app.post("/slack/events", (req, res) => {
     const body = req.body;
     const { event } = body;
+    // Need to switch between domains
+    // res.send(body.challenge);
     res.sendStatus(200);
 
     if (event && event.type === 'message' && event.channel_type === 'im' && event.user !== rtm.activeUserId) {
