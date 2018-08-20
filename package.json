@@ -3,6 +3,19 @@
     "version": "0.1.0",
     "description": "Hi I am Mel. Woof.",
     "main": "index.js",
+    "now": {
+        "alias": "melbot",
+        "scale": {
+            "sfo1": {
+                "min": 1,
+                "max": "auto"
+            },
+            "bru1": {
+                "min": 1,
+                "max": "auto"
+            }
+        }
+    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "nodemon index.js",
