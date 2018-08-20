@@ -1,6 +1,7 @@
 const helpers = require('./helpers');
+const BOT_TOKEN = process.env.BOT_TOKEN;
 
-module.exports = (rtm) => {
+module.exports = (rtm, web) => {
 
     const checkIfDM = (channel) => {
         const dm = channel[0] === 'D';
@@ -55,9 +56,19 @@ module.exports = (rtm) => {
         const channel = event.channel;
 
         if ((text.match(listen) || text.includes(`<@${rtm.activeUserId}>`)) && !checkIfDM(channel) ) {
-            rtm.sendMessage(response, message.channel)
-                .then(msg => console.log("Sent!"))
-                .catch(err => console.log("PROBLEM: ", err));
+
+            if (event.thread_ts) {
+                web.chat.postMessage({
+                    channel: message.channel,
+                    text: response,
+                    thread_ts: event.thread_ts
+                });
+            } else {
+                rtm.sendMessage(response, message.channel)
+                    .then(msg => console.log("Sent!"))
+                    .catch(err => console.log("PROBLEM: ", err));
+            }
+            
         }
     };
 
