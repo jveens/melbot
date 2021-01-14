@@ -1,0 +1,48 @@
+{
+    "name": "melbot",
+    "version": "0.1.0",
+    "description": "Hi I am Mel. Woof.",
+    "main": "index.js",
+    "now": {
+        "alias": "melbot",
+        "scale": {
+            "sfo1": {
+                "min": 1,
+                "max": "auto"
+            },
+            "bru1": {
+                "min": 1,
+                "max": "auto"
+            }
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon index.js",
+        "ngrok": "./ngrok http :5000 --subdomain=melbot"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jveens/slackbot.git"
+    },
+    "keywords": [
+        "slack",
+        "bot"
+    ],
+    "author": "Jenny Veens",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/jveens/slackbot/issues"
+    },
+    "homepage": "https://github.com/jveens/slackbot#readme",
+    "dependencies": {
+        "@slack/client": "^4.2.2",
+        "@slack/events-api": "^1.0.1",
+        "dotenv": "^5.0.1"
+    },
+    "devDependencies": {
+        "babel-preset-env": "^1.7.0",
+        "babel-register": "^6.26.0",
+        "nodemon": "^1.17.5"
+    }
+}
