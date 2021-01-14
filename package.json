@@ -3,19 +3,6 @@
     "version": "0.1.0",
     "description": "Hi I am Mel. Woof.",
     "main": "index.js",
-    "now": {
-        "alias": "melbot",
-        "scale": {
-            "sfo1": {
-                "min": 1,
-                "max": "auto"
-            },
-            "bru1": {
-                "min": 1,
-                "max": "auto"
-            }
-        }
-    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "nodemon index.js",
@@ -44,5 +31,8 @@
         "babel-preset-env": "^1.7.0",
         "babel-register": "^6.26.0",
         "nodemon": "^1.17.5"
+    },
+    "engines": {
+        "node": "11.1.0"
     }
 }
